@@ -1,0 +1,22 @@
+[project]
+name = "test-repo-uv"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "szabo308zsolt", email = "szabo308zsolt@gmail.com" }
+]
+requires-python = ">=3.11"
+dependencies = [
+    "dotenv>=0.9.9",
+    "langchain>=1.4.7",
+    "langchain-openai>=1.7.2",
+    "pip>=26.2.2",
+]
+
+[project.scripts]
+test-repo-uv = "test_repo_uv:main"
+
+[build-system]
+requires = ["uv_build>=0.13.4,<0.14.0"]
+build-backend = "uv_build"
