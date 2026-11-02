@@ -151,7 +151,7 @@ class TextToSQLAgent:
 
 
 DEFAULT_PROVIDER = os.getenv("LLM_PROVIDER", "openai")
-DEFAULT_MODEL = os.getenv("LLM_MODEL", "gpt-5.4-mini-2026-03-17How ")
+DEFAULT_MODEL = os.getenv("LLM_MODEL", "gpt-5.4-mini-2026-03-17")
 
 
 def build_llm(provider: str = DEFAULT_PROVIDER, model: str | None = None) -> LLM:
