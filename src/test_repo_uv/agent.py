@@ -3,6 +3,7 @@ from dataclasses import dataclass, field
 from typing import Protocol
 
 from dotenv import load_dotenv
+from decisions import analytics_decision
 
 load_dotenv()  # reads OPENAI_API_KEY (and any other keys) from the .env file
 
@@ -180,12 +181,16 @@ if __name__ == "__main__":
                    choices=["openai", "ollama", "anthropic", "gemini"])
     p.add_argument("--model", default=None, help=f"default for openai: {DEFAULT_MODEL}")
     a = p.parse_args()
-
     agent = TextToSQLAgent(build_llm(a.provider, a.model), a.db)
     while True:
         q = input("\nAsk> ").strip()
         if q in {"", "exit", "quit"}:
             break
+        is_analytics = analytics_decision(q)
+        print(is_analytics)
+        if not(is_analytics):
+            print("Not an analytics question")
+            continue
         r = agent.ask(q)
         print(f"\nSQL ({r.attempts} attempt(s)):\n{r.sql}")
         if r.error:
