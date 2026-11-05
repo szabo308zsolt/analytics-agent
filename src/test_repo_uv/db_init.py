@@ -1,7 +1,6 @@
 import sqlite3
 
 
-
 def init_sql_server():
     conn = sqlite3.connect("shop.db")
     conn.executescript("""
@@ -24,20 +23,6 @@ def init_sql_server():
     conn.close()
 
 
-
-def get_schema(conn: sqlite3.Connection, sample_rows: int = 3) -> str:
-    out = []
-    tables = [r[0] for r in conn.execute(
-        "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'")]
-    for t in tables:
-        ddl = conn.execute("SELECT sql FROM sqlite_master WHERE name=?", (t,)).fetchone()[0]
-        out.append(ddl + ";")
-        if sample_rows:
-            cur = conn.execute(f'SELECT * FROM "{t}" LIMIT {sample_rows}')
-            cols = [d[0] for d in cur.description]
-            rows = cur.fetchall()
-            if rows:
-                out.append(f"/* sample rows from {t}: columns {cols}")
-                out += [f"   {r}" for r in rows]
-                out.append("*/")
-    return "\n".join(out)
+if __name__ == "__main__":
+    init_sql_server()
+    
