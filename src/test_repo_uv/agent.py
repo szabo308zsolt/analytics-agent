@@ -3,9 +3,10 @@ from dataclasses import dataclass, field
 from typing import Protocol
 
 from dotenv import load_dotenv
+load_dotenv()  # reads OPENAI_API_KEY (and any other keys) from the .env file
+
 from decisions import analytics_decision
 
-load_dotenv()  # reads OPENAI_API_KEY (and any other keys) from the .env file
 
 
 class LLM(Protocol):
@@ -187,8 +188,7 @@ if __name__ == "__main__":
         if q in {"", "exit", "quit"}:
             break
         is_analytics = analytics_decision(q)
-        print(is_analytics)
-        if not(is_analytics):
+        if not(analytics_decision(q)):
             print("Not an analytics question")
             continue
         r = agent.ask(q)
